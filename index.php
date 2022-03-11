@@ -24,57 +24,45 @@ if (isset($_GET['search'])) {
     $both = null;
     $both = $_GET['ajPreklad'];
     $fullText = null;
-    $fullText = $_GET['fulltext'];
-    //var_dump($_GET['language_id']);
-    if ($both != null && $fullText != null) {
-        $sql = "SELECT table1.term as search, 
-                    table1.description as searchDescription,
-                    table2.term  as result,
-                    table2.description as resultDescription
-                    FROM `glossary` table1 join `glossary` table2 on table1.term_id=table2.term_id 
-                    WHERE table1.id <>table2.id and table1.language_id=:language_id and 
-                    ((table1.term like :search_term) OR (table1.description like :search_term2) OR (table2.term like :search_term3) OR (table2.description like :search_term4));";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':language_id', $_GET['language_id'], PDO::PARAM_INT);
-        $stmt->bindParam(':search_term', $search_term, PDO::PARAM_STR);    
-        $stmt->bindParam(':search_term2', $search_term, PDO::PARAM_STR); 
-        $stmt->bindParam(':search_term3', $search_term, PDO::PARAM_STR); 
-        $stmt->bindParam(':search_term4', $search_term, PDO::PARAM_STR); 
-}
-    if ($both != null && $fullText == null) {
-        $sql = "SELECT table1.term as search, 
-                    table1.description as searchDescription,
-                    table2.term  as result,
-                    table2.description as resultDescription
-                    FROM `glossary` table1 join `glossary` table2 on table1.term_id=table2.term_id 
-                    WHERE table1.id <>table2.id and table1.language_id=:language_id and table1.term like :search_term;";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':language_id', $_GET['language_id'], PDO::PARAM_INT);
-        $stmt->bindParam(':search_term', $search_term, PDO::PARAM_STR);    
-    }
-    if ($both == null && $fullText != null) {
-        $sql = "SELECT table1.term as search, 
-        table1.description as searchDescription
-        FROM `glossary` table1
-        WHERE  table1.language_id=:language_id and ((table1.term like :search_term )OR (table1.description like :search_term2));";
+    $fullText = $_GET['fullText'];
+    //var_dump($fullText);
+    if ($_GET['search'] != null) {
+        if ($both != null && $fullText != null) {
+            $sql = "SELECT table1.term as search, 
+                        table1.description as searchDescription,
+                        table2.term  as result,
+                        table2.description as resultDescription
+                        FROM `glossary` table1 join `glossary` table2 on table1.term_id=table2.term_id 
+                        WHERE table1.id <>table2.id and table1.language_id=:language_id and 
+                        ((table1.term like '$search_term') OR (table1.description like :search_term) OR (table2.term like :search_term) OR (table2.description like :search_term));";
+        }
+        if ($both != null && $fullText == null) {
+            $sql = "SELECT table1.term as search, 
+                        table1.description as searchDescription,
+                        table2.term  as result,
+                        table2.description as resultDescription
+                        FROM `glossary` table1 join `glossary` table2 on table1.term_id=table2.term_id 
+                        WHERE table1.id <>table2.id and table1.language_id=:language_id and table1.term like :search_term;";
+        }
+        if ($both == null && $fullText != null) {
+            $sql = "SELECT table1.term as search, 
+            table1.description as searchDescription
+            FROM `glossary` table1
+            WHERE  table1.language_id=:language_id and ((table1.term like :search_term )OR (table1.description like :search_term));";
+        }
+        if ($both == null && $fullText == null) {
+            $sql = "SELECT table1.term as search, 
+                        table1.description as searchDescription
+                        FROM `glossary` table1
+                        WHERE  table1.language_id=:language_id and table1.term like :search_term;";
+        }
+
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':language_id', $_GET['language_id'], PDO::PARAM_INT);
         $stmt->bindParam(':search_term', $search_term, PDO::PARAM_STR);
-        $stmt->bindParam(':search_term2', $search_term, PDO::PARAM_STR);
+        $stmt->execute();
+        $searchResult = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
-    if ($both == null && $fullText == null) {
-        $sql = "SELECT table1.term as search, 
-                    table1.description as searchDescription
-                    FROM `glossary` table1
-                    WHERE  table1.language_id=:language_id and table1.term like :search_term;";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':language_id', $_GET['language_id'], PDO::PARAM_INT);
-        $stmt->bindParam(':search_term', $search_term, PDO::PARAM_STR);            
-    }
-
-    
-    $stmt->execute();
-    $searchResult = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 ?>
 
@@ -86,6 +74,11 @@ if (isset($_GET['search'])) {
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
@@ -126,9 +119,11 @@ if (isset($_GET['search'])) {
             </div>
             <div class="form-group">
                 <label for="search" class="col-sm-1 col-form-label">Hladane slovo</label>
-                <input type="text" name="search" id="search">
-                <input type="submit" value="Vyhladaj">
+                <input type="text" name="search" id="search" placeholder="Zadaj vyraz" autocomplete="off">
+                <div id="searchList"></div>
+                <input type="submit" class="btn btn-primary col-sm-2" value="Vyhladaj">
             </div>
+
 
 
         </form>
@@ -144,7 +139,7 @@ if (isset($_GET['search'])) {
 
 
 
-        <table class="table  table-stripped">
+        <table class="table table-bordered table-striped table-hover">
             <thead>
                 <td>Pojem</td>
                 <td>Vysvetlenie</td>
@@ -167,7 +162,7 @@ if (isset($_GET['search'])) {
                         if ($value['result'] != null) {
                             echo "<tr><td>" . $value['search'] . "</td><td>" . $value['searchDescription'] . "</td><td>" . $value['result'] . "</td><td>" . $value['resultDescription'] . "</td><tr>";
                         } else {
-                            echo "<tr><td>" . $value['search'] . "</td><td>" . $value['searchDescription'] . "</td><td><td>-</td><td>-</td><tr>";
+                            echo "<tr><td>" . $value['search'] . "</td><td>" . $value['searchDescription'] . "</td><td>-</td><td>-</td><tr>";
                         }
                     }
                 } else echo "<tr><td>-</td><td>-</td><td>-</td><td>-</td><tr>";
@@ -179,20 +174,35 @@ if (isset($_GET['search'])) {
     </div>
 
     <script>
-        /*
-        const button = document.querySelector('#search-button');
-        const form = document.querySelector('#search-form');
-        button.addEventListener('click', () => {
-            const data = new FormData(form);
-            fetch("search.php?language_id=" + data.get("language_id") + "&search=" + data.get("search"), {
-                    method: 'get'
-                })
-                .then((response) => response.json())
-                .then(console.log)
-        })
-         */
-
-        // $("#search").autocomplete();
+        $(document).ready(function() {
+            $('#search').keyup(function() {
+                var query = $(this).val();
+                /*if(parseInt($('#language').val>2)){
+                    lang_id=1;
+                }else{
+                    lang_id=parseInt($('#language').val);
+                }
+                console.log(parseInt($('#language').val));*/
+                if (query != '' && query.length > 2) {
+                    $.ajax({
+                        url: "search.php",
+                        method: "POST",
+                        data: {
+                            query: query
+                            //language_id: lang_id
+                        },
+                        success: function(data) {
+                            $('#searchList').fadeIn();
+                            $('#searchList').html(data);
+                        }
+                    });
+                }
+            });
+            $(document).on('click', 'li', function(){  
+           $('#search').val($(this).text());  
+           $('#searchList').fadeOut();  
+      });  
+        });
     </script>
 
 
@@ -201,7 +211,7 @@ if (isset($_GET['search'])) {
 
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>

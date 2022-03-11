@@ -1,5 +1,5 @@
 <?php
-/*ini_set('display_errors', 1);
+ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 require_once("config.php");
@@ -12,6 +12,30 @@ try {
 } catch (PDOException $e) {
     echo "Connection failed: " . $e->getMessage();
 }
+
+
+if(isset($_POST['query'])){
+    $output = '';
+    $query = "SELECT term FROM glossary WHERE /*language_id=:language_id AND*/ term LIKE '". $_POST["query"]. "%';";
+    $stmt = $conn->prepare($query);
+   // $stmt->bindParam(':language_id', $_POST['language_id'], PDO::PARAM_INT);
+    $stmt->execute();
+    $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $output= '<ul class="list-unstyled">';
+    /*echo "<pre>";
+    var_dump($_POST['language_id']);
+    echo "</pre>";*/
+    if(count($result) > 0){
+        foreach($result as $result){
+            $output .= '<li>'.$result['term'].'</li>';
+        }
+    }else{
+        $output.='<li>Ziadne vysledky v zozname pojmov.</li>';
+    }
+    $output .= '</ul>';
+    echo $output;
+}
+/*
 $languages = [];
 $searchResult = null;
 $sql = 'SELECT * FROM language';
@@ -36,4 +60,3 @@ if (isset($_GET['search'])) {
     $searchResult = $stmt->fetchAll(PDO::FETCH_ASSOC);
 }
 echo json_encode($searchResult);*/
-?>
