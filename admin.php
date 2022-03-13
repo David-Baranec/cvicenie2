@@ -1,7 +1,7 @@
 <?php
-ini_set('display_errors', 1);
+/*ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+error_reporting(E_ALL);*/
 require_once("config.php");
 
 try {
@@ -24,26 +24,29 @@ try {
 <html lang="sk">
 
 <head>
-    <title>Glosar</title>
+    <title>Glosár</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.png">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
 
-<body>
-    <div class="container">
-        <h1>Admin panel</h1>
+<body class=" bg-dark">
+    <br>
+    <div class="container bg-secondary text-white">
+        <br>
+        <h1 class="text-center">Admin panel</h1>
 
 
 
-        <table class="table  table-stripped">
-            <thead>
+        <table class="table  table-stripped text-white">
+            <thead class="thead-dark text-bold">
                 <td>ID</td>
-                <td>nazov</td>
+                <td>názov</td>
                 <td>akcia</td>
             </thead>
 
@@ -59,7 +62,7 @@ try {
                         /*echo "<pre>";
                 var_dump($term);
                 echo "</pre>";*/
-                        echo "<tr><td>" . $term['id'] . "</td><td>" . $term['name'] . "</td><td><a href='edit.php?id={$term['id']}'>Edit</a></td></tr>";
+                        echo "<tr><td>" . $term['id'] . "</td><td>" . $term['name'] . "</td><td><a href='edit.php?id={$term['id']}' class= text-white>Upraviť</a></td></tr>";
                     }
                 }
                 ?>
@@ -110,7 +113,7 @@ try {
         }
 
         ?>
-        <h1>Pridaj novu glosu:</h1>
+        <h1>Pridaj novú glosu:</h1>
         <form method="POST">
             <div class="form-group">
                 <label for="en_pojem" class="col-sm-2 col-form-label">
@@ -133,7 +136,7 @@ try {
 
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-primary col-sm-2" name="Upload" value="Upload">
+                <input type="submit" class="btn btn-primary col-sm-2" name="Upload" value="Nahrať">
             </div>
 
 
@@ -141,14 +144,15 @@ try {
         </form>
         <hr>
         <hr>
+        <h2>Pridaj údaje zo súboru .csv</h2>
         <form action="upload.php" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                Select CSV file:
+                Zvoľte súbor .csv
                 <input id="csv" type="file" name="csv">
-                <input type="submit" class="btn btn-primary" value="Upload CSV" name="submit">
+                <input type="submit" class="btn btn-primary" value="Nahrať CSV" name="submit">
             </div>
         </form>
-
+        <br>
 
 
         <!-- Optional JavaScript -->
@@ -157,6 +161,7 @@ try {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     </div>
+    <br>
 </body>
 
 </html>

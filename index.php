@@ -70,26 +70,28 @@ if (isset($_GET['search'])) {
 <html lang="sk">
 
 <head>
-    <title>Glosar</title>
+    <title>Glosár</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    
+    <link rel="icon" href="favicon.png">
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.min.js" integrity="sha256-9/aliU8dGd2tb6OSsuzixeV4y/faTqgFtohetphbbj0=" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="style.css">
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 
-<body>
-    <div class="container">
-        <h1>Vitajte v Glosari</h1>
+<body class=" bg-dark">
+    <br>
+    <div class="container bg-secondary text-white">
+        <br>
+        <h1 class="text-center">Vitajte v Glosari</h1>
         <form action="index.php" method="get" id="search-form">
-            <div class="form-group">
-                <label for="language" class="col-sm-1 col-form-label">Jazyk</label>
+            <div class="form-group mb-2">
+                <label for="language" class="col-sm-2 ">Jazyk pre zobrazenie</label>
                 <select name="language_id" id="language">
                     <?php
                     foreach ($languages as $language) {
@@ -99,29 +101,27 @@ if (isset($_GET['search'])) {
                 </select>
 
             </div>
-            <div class="form-group">
-                <div class="form-check">
+            <div class="form-group mb-2">
 
-                    <label class="form-check-label col-sm-2" for="ajPreklad">
-                        Vyhladat aj preklad
-                    </label>
-                    <input class="form-check-input " type="checkbox" name="ajPreklad" id="ajPreklad">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="form-check">
+                <label class="form-check-label col-sm-3" for="ajPreklad">
+                    Vyhľadať aj preklad
+                </label>
+                <input class="form-check-input " type="checkbox" name="ajPreklad" id="ajPreklad">
 
-                    <label class="form-check-label col-sm-2" for="fullText">
-                        Vyhladavat fulltextovo
-                    </label>
-                    <input class="form-check-input " type="checkbox" name="fullText" id="fullText">
-                </div>
             </div>
-            <div class="form-group">
-                <label for="search" class="col-sm-1 col-form-label">Hladane slovo</label>
-                <input type="text" name="search" id="search" placeholder="Zadaj vyraz" autocomplete="off">
+            <div class="form-group mb-2">
+
+                <label class="form-check-label col-sm-3" for="fullText">
+                    Vyhľadávať fulltextovo
+                </label>
+                <input class="form-check-input " type="checkbox" name="fullText" id="fullText">
+
+            </div>
+            <div class="form-group mb-2">
+                <label for="search" class="col-sm-2 col-form-label">Hľadané slovo</label>
+                <input type="text" name="search" id="search" placeholder="Zadaj výraz" autocomplete="off">
                 <div id="searchList"></div>
-                <input type="submit" class="btn btn-primary col-sm-2" value="Vyhladaj">
+                <input type="submit" class="btn btn-primary col-sm-2" value="Vyhľadaj">
             </div>
 
 
@@ -139,7 +139,7 @@ if (isset($_GET['search'])) {
 
 
 
-        <table class="table table-bordered table-striped table-hover">
+        <table class="table table-bordered table-striped table-hover text-white">
             <thead>
                 <td>Pojem</td>
                 <td>Vysvetlenie</td>
@@ -171,6 +171,7 @@ if (isset($_GET['search'])) {
             </tbody>
 
         </table>
+        <br>
     </div>
 
     <script>
@@ -196,12 +197,14 @@ if (isset($_GET['search'])) {
                             $('#searchList').html(data);
                         }
                     });
+                } else {
+                    $('#searchList').html('');
                 }
             });
-            $(document).on('click', 'li', function(){  
-           $('#search').val($(this).text());  
-           $('#searchList').fadeOut();  
-      });  
+            $(document).on('click', 'li', function() {
+                $('#search').val($(this).text());
+                $('#searchList').fadeOut();
+            });
         });
     </script>
 

@@ -1,7 +1,7 @@
 <?php
-ini_set('display_errors', 1);
+/*ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+error_reporting(E_ALL);*/
 require_once("config.php");
 
 try {
@@ -51,9 +51,9 @@ if (isset($_POST["submit"])) {
                     $stmt->execute([$data[0]]);
                     $terms = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
-                    echo "<pre>";
+                    /*echo "<pre>";
                     var_dump($terms);
-                    echo "</pre>";
+                    echo "</pre>";*/
 
                     if (!(count($terms) > 0)) {
                         $sql = "INSERT INTO term (name) VALUES (?)";
@@ -66,9 +66,9 @@ if (isset($_POST["submit"])) {
                         $stmt = $conn->prepare($sql);
                         $stmt->execute([$data[0]]);
                         $id = $stmt->fetch(PDO::FETCH_ASSOC);
-                        echo "<pre>";
+                        /*echo "<pre>";
                         var_dump($id['id']);
-                        echo "</pre>";
+                        echo "</pre>";*/
 
                         $sql = "INSERT INTO glossary (term,description,language_id,term_id) VALUES (?,?,?,?)";
                         $stmt = $conn->prepare($sql);
@@ -80,27 +80,48 @@ if (isset($_POST["submit"])) {
                     }
                     // inc the row
                     $row++;
-                    echo "<hr>";
+                    //echo "<hr>";
                 }
                 fclose($handle);
             }
         }
 
-        echo "<pre>";
+        /*echo "<pre>";
         var_dump($csv);
-        echo "</pre>";
+        echo "</pre>";*/
     }
 }
 ?>
-<!DOCTYPE html>
-<html lang="en">
+
+<!doctype html>
+<html lang="sk">
+
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>uploaded</title>
+    <title>Uploaded</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
-<body>
-<button class="btn" onclick="window.location.href='https://site38.webte.fei.stuba.sk/cvicenie2/admin.php'">Späť</button>
+
+<body class=" bg-secondary">
+    <br>
+    <div class="container bg-secondary text-white">
+        <br>
+        <h1 class="text-center">Uploaded</h1>
+        <br>
+        <button class="btn btn-primary" onclick="window.location.href='https://site38.webte.fei.stuba.sk/cvicenie2/admin.php'">Späť</button>
+
+    </div>
+    <br>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 </body>
+
 </html>

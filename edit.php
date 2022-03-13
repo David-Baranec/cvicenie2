@@ -1,7 +1,7 @@
 <?php
-ini_set('display_errors', 1);
+/*ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+error_reporting(E_ALL);*/
 require_once("config.php");
 
 try {
@@ -64,19 +64,22 @@ if (!empty($_GET['id'])) {
 
 
 <!DOCTYPE html>
-<html lang="en">
+<html lang="sk">
 
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="favicon.png">
     <title>Edit</title>
 </head>
 
 <body>
+    <br>
     <div class="container">
+        <br>
         <h1>Glossary Editor</h1>
         <form <?php "action='edit.php?id=" . htmlspecialchars($_GET['id']) . "'";
                 ?> method="POST">
@@ -101,12 +104,13 @@ if (!empty($_GET['id'])) {
 
             </div>
             <div class="form-group ">
-                <input type="submit" class="btn btn-primary col-sm-2" name="edit" value="Edit">
+                <input type="submit" class="btn btn-primary col-sm-2" name="edit" value="Uprav">
+
             </div>
             <div class="form-group">
                 <!-- Button trigger modal -->
                 <button type="button" class="btn btn-danger col-sm-2" data-toggle="modal" data-target="#exampleModal">
-                    Delete
+                    Vymaž
                 </button>
 
                 <!-- Modal -->
@@ -114,17 +118,18 @@ if (!empty($_GET['id'])) {
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                                <h5 class="modal-title" id="exampleModalLabel">Zmazanie záznamu</h5>
                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">&times;</span>
                                 </button>
                             </div>
                             <div class="modal-body">
-                                Prajete si naozaj vymazat tento zaznam?
+                                Prajete si naozaj vymazať tento záznam?
                             </div>
                             <div class="modal-footer">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                <input type="submit" class="btn btn-danger col-sm-2 " name="delete" value="delete">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Zavrieť</button>
+                                <input type="submit" class="btn btn-danger col-sm-2 " name="delete" value="Zmazať">
+
                             </div>
                         </div>
                     </div>
@@ -134,8 +139,11 @@ if (!empty($_GET['id'])) {
 
 
 
-
         </form>
+        <div class="form-group">
+            <button class="btn btn-primary  col-sm-2" onclick="window.location.href='https://site38.webte.fei.stuba.sk/cvicenie2/admin.php'" name="Späť" value="Späť">Späť</button>
+
+        </div>
         <!-- Optional JavaScript -->
         <!-- jQuery first, then Popper.js, then Bootstrap JS -->
         <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

@@ -1,7 +1,7 @@
 <?php
-ini_set('display_errors', 1);
+/*ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
+error_reporting(E_ALL);*/
 require_once("config.php");
 
 try {
@@ -30,7 +30,7 @@ if(isset($_POST['query'])){
             $output .= '<li>'.$result['term'].'</li>';
         }
     }else{
-        $output.='<li>Ziadne vysledky v zozname pojmov.</li>';
+        $output.='<li>Žiadne výsledky v zozname pojmov. Skúste zvoliť full-text vyhľadávanie.</li>';
     }
     $output .= '</ul>';
     echo $output;
