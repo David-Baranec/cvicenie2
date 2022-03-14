@@ -16,9 +16,9 @@ try {
 
 if(isset($_POST['query'])){
     $output = '';
-    $query = "SELECT term FROM glossary WHERE /*language_id=:language_id AND*/ term LIKE '". $_POST["query"]. "%';";
+    $query = "SELECT term FROM glossary WHERE language_id=:language_id AND term LIKE '". $_POST["query"]. "%';";
     $stmt = $conn->prepare($query);
-   // $stmt->bindParam(':language_id', $_POST['language_id'], PDO::PARAM_INT);
+    $stmt->bindParam(':language_id', $_POST['language_id'], PDO::PARAM_INT);
     $stmt->execute();
     $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $output= '<ul class="list-unstyled">';

@@ -92,12 +92,13 @@ if (isset($_GET['search'])) {
         <form action="index.php" method="get" id="search-form">
             <div class="form-group mb-2">
                 <label for="language" class="col-sm-2 ">Jazyk pre zobrazenie</label>
-                <select name="language_id" id="language">
+                <select name="language_id" id="language_id" onchange="changeId();">
                     <?php
                     foreach ($languages as $language) {
                         echo "<option value='" . $language['id'] . "'>" . $language['name'] . "</option>";
                     }
                     ?>
+
                 </select>
 
             </div>
@@ -175,22 +176,33 @@ if (isset($_GET['search'])) {
     </div>
 
     <script>
+        var lang_id = 1;
+        function changeId() {
+    
+            //lang_id++;
+            lang_id=(lang_id%2)+1;
+            console.log(lang_id);
+        }
+
+
         $(document).ready(function() {
             $('#search').keyup(function() {
                 var query = $(this).val();
-                /*if(parseInt($('#language').val>2)){
-                    lang_id=1;
-                }else{
-                    lang_id=parseInt($('#language').val);
-                }
-                console.log(parseInt($('#language').val));*/
+                /*if (parseInt($('#language').val > 2)) {
+                 */
+               
+                /*
+                                } else {
+                                    lang_id = parseInt($('#language').val);
+                                }*/
+                console.log(lang_id);
                 if (query != '' && query.length > 2) {
                     $.ajax({
                         url: "search.php",
                         method: "POST",
                         data: {
-                            query: query
-                            //language_id: lang_id
+                            query: query,
+                            language_id: lang_id
                         },
                         success: function(data) {
                             $('#searchList').fadeIn();
